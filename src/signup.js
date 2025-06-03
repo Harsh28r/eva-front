@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+
 function SignUp({ setToken }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +16,7 @@ function SignUp({ setToken }) {
     e.preventDefault();
     setError('');
     setSuccess('');
-    
+
     // Validation
     if (!email || !password || !confirmPassword) {
       setError('Please fill in all fields');
@@ -31,7 +33,7 @@ function SignUp({ setToken }) {
 
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -64,7 +66,7 @@ function SignUp({ setToken }) {
         <div className="card shadow">
           <div className="card-body p-4">
             <h2 className="card-title text-center mb-4 text-primary">Sign Up</h2>
-            
+
             {/* Error Message */}
             {error && (
               <div className="alert alert-danger" role="alert">
